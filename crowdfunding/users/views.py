@@ -1,9 +1,14 @@
 from django.http import Http404
 from rest_framework.views import APIView
 from rest_framework.response import Response
-from rest_framework import status
+from rest_framework import status, permissions
 from .models import CustomUser
 from .serializers import CustomUserSerializer
+from .permissions import  IsOwnerOrReadOnly, IsAdminUser, IsAdminUserOrReadOnly
+
+#---------------------------------------------------------------------------------
+# -- Creation of a User Profile. No Authentication required. 
+#--------------------------------------------------------------------------------- 
 
 class CustomUserList(APIView):
     
@@ -18,8 +23,18 @@ class CustomUserList(APIView):
             serializer.save()
             return Response(serializer.data)
         return Response(serializer.errors)
-        
+
+#---------------------------------------------------------------------------------
+# --This class and functions allows a user to edit their Profile details 
+#---------------------------------------------------------------------------------    
 class CustomUserDetail(APIView):
+
+    permission_classes = [
+
+        permissions.IsAuthenticatedOrReadOnly,
+        IsOwnerOrReadOnly
+    ]
+
     def get_object(self, pk):
         try:
             return CustomUser.objects.get(pk=pk)
@@ -30,4 +45,16 @@ class CustomUserDetail(APIView):
         user = self.get_object(pk)
         serializer = CustomUserSerializer(user)
         return Response(serializer.data)
+
+#-----------------------------------------------------------------------------
+#-- This Function, allows the User or an Admin User to Delete a User Profile
+#-----------------------------------------------------------------------------
+
+
+# Function currently works for user to delete their own profile but not an admin user... Need helps!
+
+    def delete(self, request, pk):
+        user = self.get_object(pk)
+        user.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
