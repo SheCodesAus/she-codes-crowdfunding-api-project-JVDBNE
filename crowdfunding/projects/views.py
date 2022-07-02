@@ -22,7 +22,7 @@ class PledgeList(APIView):
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
 
 
-# Below will allow a user to update a pledge that they made
+# Below will allow a user to update or delete a pledge that they made
 #-------------------------------------------------------------------------------------------------
 class PledgeDetail(APIView):
 
@@ -62,6 +62,12 @@ class PledgeDetail(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+    def delete(self, request, pk):
+        pledge = self.get_object(pk)
+        pledge.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
+
 class ProjectList(APIView):
 
     
@@ -84,7 +90,7 @@ class ProjectList(APIView):
         )
 
 
-# Allows a user to update a project they they created
+# Allows a user to update or delete a project they they created
 #-------------------------------------------------------------------------------------
 
 class ProjectDetail(APIView):
@@ -126,5 +132,10 @@ class ProjectDetail(APIView):
             serializer.errors,
             status=status.HTTP_400_BAD_REQUEST
         )
+
+    def delete(self, request, pk):
+        project = self.get_object(pk)
+        project.delete()
+        return Response(status=status.HTTP_204_NO_CONTENT)
 
 
