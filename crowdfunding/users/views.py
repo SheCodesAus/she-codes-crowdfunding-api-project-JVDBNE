@@ -46,15 +46,4 @@ class CustomUserDetail(APIView):
         serializer = CustomUserSerializer(user)
         return Response(serializer.data)
 
-#-----------------------------------------------------------------------------
-#-- This Function, allows the User or an Admin User to Delete a User Profile
-#-----------------------------------------------------------------------------
-
-
-# Function currently works for user to delete their own profile but not an admin user... Need helps!
-
-    def delete(self, request, pk):
-        user = self.get_object(pk)
-        user.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
 

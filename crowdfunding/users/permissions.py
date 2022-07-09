@@ -8,13 +8,3 @@ class IsOwnerOrReadOnly(permissions.BasePermission):
             return True
         return obj.owner == request.user
 
-#--------------------------------------------------------------------------------
-#-- Seeking to add a permission that allows the SuperAdmin User to Delete any User
-#--------------------------------------------------------------------------------
-class IsAdminUserOrReadOnly(IsAdminUser):
-
-    def has_permission(self, request, view):
-        is_admin = super(
-            IsAdminUser, 
-            self).has_permission(request, view)
-        return request.method in SAFE_METHODS or is_admin
