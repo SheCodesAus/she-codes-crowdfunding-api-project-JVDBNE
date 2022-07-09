@@ -1,6 +1,14 @@
 # django_crowdsourcingproject
 Crowd Sourcing project using DJANGO, DRF
 
+
+
+Heroku Link: https://vast-waters-62555.herokuapp.com/
+
+https://vast-waters-62555.herokuapp.com/projects
+https://vast-waters-62555.herokuapp.com/users
+
+
 All of the following Features are currently working as intended. 
 
 ##User Accounts 
