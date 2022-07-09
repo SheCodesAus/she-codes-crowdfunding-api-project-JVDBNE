@@ -96,7 +96,6 @@ class ProjectList(APIView):
 class ProjectDetail(APIView):
 
     permission_classes = [
-        permissions.IsAuthenticatedOrReadOnly,
         IsOwnerOrReadOnly
     ]
 
@@ -136,6 +135,15 @@ class ProjectDetail(APIView):
     def delete(self, request, pk):
         project = self.get_object(pk)
         project.delete()
-        return Response(status=status.HTTP_204_NO_CONTENT)
+
+        if IsOwnerOrReadOnly or request.user.is_staff==True:  
+            return Response(
+                status=status.HTTP_204_NO_CONTENT
+            )
+        return Response(
+                status=status.HTTP_401_UNAUTHORIZED
+        )
+
+
 
 

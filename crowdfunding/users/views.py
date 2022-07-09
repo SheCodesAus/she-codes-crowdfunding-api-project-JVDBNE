@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status, permissions
 from .models import CustomUser
 from .serializers import CustomUserSerializer
-from .permissions import  IsOwnerOrReadOnly, IsAdminUser, IsAdminUserOrReadOnly
+from .permissions import  IsOwnerOrReadOnly
 
 #---------------------------------------------------------------------------------
 # -- Creation of a User Profile. No Authentication required. 
